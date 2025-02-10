@@ -11,6 +11,9 @@ class SignupController extends GetxController {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
+  var isPasswordVisible = false.obs;
+  var isConfirmPasswordVisible = false.obs;
+
   var selectedCountryCode = '+1'.obs;
 
   void signup() {

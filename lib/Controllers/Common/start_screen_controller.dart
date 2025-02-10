@@ -7,17 +7,17 @@ class ScreenController extends GetxController {
     {
       "headline": "Your travel has just begun",
       "description": "A simple explanation to the audience regarding the headline",
-      "image": "assets/images/background1.png",
+      "image": "assets/images/background1.jpg",
     },
     {
       "headline": "Explore the hidden gems",
       "description": "Discover amazing places you've never seen before",
-      "image": "assets/images/background2.png",
+      "image": "assets/images/background2.jpg",
     },
     {
       "headline": "Adventure awaits",
       "description": "Embark on a journey full of excitement and thrill",
-      "image": "assets/images/background3.png",
+      "image": "assets/images/background3.jpg",
     },
   ];
 

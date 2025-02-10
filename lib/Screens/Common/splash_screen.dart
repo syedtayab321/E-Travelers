@@ -49,14 +49,14 @@ class _SplashScreenState extends State<SplashScreen> {
                   height: 150,
                 ),
                 const SizedBox(height: 20),
-                const CustomTextWidgte(
+                const CustomTextWidget(
                  text:  "E-Travelers",
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                 ),
                 const SizedBox(height: 10),
-                const CustomTextWidgte(
+                const CustomTextWidget(
                  text:"Explore the world with ease",
                     fontSize: 16,
                     color: Colors.white70,

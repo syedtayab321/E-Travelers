@@ -1,4 +1,5 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:e_traverlers/Screens/Auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Controllers/Auth/signup_controller.dart';
@@ -35,13 +36,13 @@ class SignupScreen extends StatelessWidget {
                       height: 100,
                     ),
                     const SizedBox(height: 20),
-                    const CustomTextWidgte(
+                    const CustomTextWidget(
                       text: "Sign Up",
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
-                    const CustomTextWidgte(
+                    const CustomTextWidget(
                       text: "Join us to explore the world",
                       fontSize: 16,
                       color: Colors.white70,
@@ -99,24 +100,45 @@ class SignupScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
 
-                    CustomTextFormField(
+                    Obx(() => CustomTextFormField(
                       controller: controller.passwordController,
                       hintText: "Password",
                       prefixIcon: Icons.lock_outline,
-                      obscureText: true,
-                      validator: Validators.validatePassword,
-                    ),
+                      obscureText: !controller.isPasswordVisible.value,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          controller.isPasswordVisible.value
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          controller.isPasswordVisible.value =
+                          !controller.isPasswordVisible.value;
+                        },
+                      ),
+                    )),
                     const SizedBox(height: 20),
 
-                    CustomTextFormField(
+                    Obx(()=> CustomTextFormField(
                       controller: controller.confirmPasswordController,
                       hintText: "Confirm Password",
                       prefixIcon: Icons.lock_outline,
-                      obscureText: true,
+                      obscureText: !controller.isConfirmPasswordVisible.value,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          controller.isConfirmPasswordVisible.value
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          controller.isConfirmPasswordVisible.value =
+                          !controller.isConfirmPasswordVisible.value;
+                        },
+                      ),
                       validator: (value) =>
                           Validators.validateConfirmPassword(
                               value, controller.passwordController.text),
-                    ),
+                    ),),
                     const SizedBox(height: 30),
 
                     CustomElevatedButton(
@@ -124,6 +146,30 @@ class SignupScreen extends StatelessWidget {
                       backgroundColor: AppColors.primaryDark,
                       textColor: Colors.white,
                       onPressed: () => controller.signup(),
+                    ),
+                    const SizedBox(height: 30),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(LoginScreen());
+                      },
+                      child: RichText(
+                        text: const TextSpan(
+                          text: "Already have an account? ",
+                          style: TextStyle(
+                            color: AppColors.textSecondary,
+                            fontSize: 14,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: "Login Now",
+                              style: TextStyle(
+                                color: AppColors.primaryDark,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),

@@ -39,14 +39,14 @@ class StartScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomTextWidgte(
+                  CustomTextWidget(
                     text: controller.screenData[controller.currentIndex.value]['headline']!,
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                   const SizedBox(height: 8),
-                  CustomTextWidgte(
+                  CustomTextWidget(
                     text: controller.screenData[controller.currentIndex.value]['description']!,
                     fontSize: 16,
                     color: Colors.white70,
@@ -59,10 +59,10 @@ class StartScreen extends StatelessWidget {
                         onPressed:(){
                           Get.offAll(LoginScreen());
                         },
-                        child: const CustomTextWidgte(
+                        child: const CustomTextWidget(
                           text: "Skip",
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 14,
                         ),
                       ),
                       Row(
@@ -71,7 +71,7 @@ class StartScreen extends StatelessWidget {
                             ElevatedButton(
                               onPressed: controller.previousScreen,
                               style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.all(21),
+                                padding: const EdgeInsets.all(10),
                                 backgroundColor: AppColors.primary,
                                 shape: const CircleBorder(),
                               ),
@@ -90,7 +90,7 @@ class StartScreen extends StatelessWidget {
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.all(21),
+                              padding: const EdgeInsets.all(10),
                               backgroundColor: AppColors.accent,
                               shape: const CircleBorder(),
                             ),
@@ -103,7 +103,7 @@ class StartScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),

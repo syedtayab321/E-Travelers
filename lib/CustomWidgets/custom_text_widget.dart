@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CustomTextWidgte extends StatelessWidget {
+class CustomTextWidget extends StatelessWidget {
   final String text;
   final double fontSize;
   final FontWeight fontWeight;
@@ -13,7 +13,7 @@ class CustomTextWidgte extends StatelessWidget {
   final double wordSpacing;
   final TextDecoration decoration;
 
-  const CustomTextWidgte({
+  const CustomTextWidget({
     Key? key,
     required this.text,
     this.fontSize = 14,

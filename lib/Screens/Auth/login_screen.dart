@@ -1,4 +1,5 @@
 import 'package:e_traverlers/Screens/Auth/signup_screen.dart';
+import 'package:e_traverlers/Screens/Dashboard/bottom_bar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Controllers/Auth/login_controller.dart';
@@ -36,13 +37,13 @@ class LoginScreen extends StatelessWidget {
                     height: 100,
                   ),
                   const SizedBox(height: 20),
-                  const CustomTextWidgte(
+                  const CustomTextWidget(
                     text: "E-Travelers",
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
-                  const CustomTextWidgte(
+                  const CustomTextWidget(
                     text: "Explore the world with ease",
                     fontSize: 18,
                     color: Colors.white70,
@@ -93,7 +94,7 @@ class LoginScreen extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                       onTap: () {},
-                      child: const CustomTextWidgte(
+                      child: const CustomTextWidget(
                         text: "Forgot Password?",
                         fontSize: 14,
                         color: AppColors.primaryDark,
@@ -140,7 +141,9 @@ class LoginScreen extends StatelessWidget {
                     text: "Continue without login",
                     backgroundColor: AppColors.primaryDark,
                     textColor: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(MainDashboardScreen());
+                    },
                   ),
                 ],
               ),
