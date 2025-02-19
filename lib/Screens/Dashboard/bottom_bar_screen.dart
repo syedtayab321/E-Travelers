@@ -1,11 +1,12 @@
+import 'package:e_traverlers/Utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../Controllers/Common/bottom_bar_controller.dart';
 
-class MainDashboardScreen extends StatelessWidget {
+class BottomBarScreen extends StatelessWidget {
   final BottomNavController controller = Get.put(BottomNavController());
-  MainDashboardScreen({super.key});
+  BottomBarScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +30,9 @@ class MainDashboardScreen extends StatelessWidget {
           ),
           child: BottomNavigationBar(
             currentIndex: controller.selectedIndex.value,
+            backgroundColor: Colors.white,
             onTap: controller.changeTabIndex,
-            selectedItemColor: Colors.blue,
+            selectedItemColor: AppColors.primary,
             unselectedItemColor: Colors.grey,
             showUnselectedLabels: false,
             type: BottomNavigationBarType.fixed,
@@ -40,16 +42,16 @@ class MainDashboardScreen extends StatelessWidget {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-                label: 'Search',
-              ),
-              BottomNavigationBarItem(
-                icon: FaIcon(FontAwesomeIcons.cartShopping),
-                label: 'Cart',
-              ),
-              BottomNavigationBarItem(
                 icon: FaIcon(FontAwesomeIcons.user),
-                label: 'Profile',
+                label: 'Account',
+              ),
+              BottomNavigationBarItem(
+                icon: FaIcon(FontAwesomeIcons.calendarCheck),
+                label: 'Booking',
+              ),
+              BottomNavigationBarItem(
+                icon: FaIcon(FontAwesomeIcons.headset),
+                label: 'Support',
               ),
             ],
           ),

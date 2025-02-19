@@ -1,8 +1,6 @@
+import 'package:e_traverlers/CustomWidgets/custom_text_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../../Utils/app_colors.dart';
-import '../../CustomWidgets/custom_text_widget.dart';
-import 'logout_dialog_box.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -10,98 +8,67 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(25),
-          bottomRight: Radius.circular(25),
-        ),
-      ),
-      backgroundColor: AppColors.primary,
       child: Column(
         children: [
-          _buildDrawerHeader(),
-          _buildDrawerItem(
-            icon: Icons.home,
-            text: "Home",
-            onTap: () => Get.toNamed('/home'),
+          UserAccountsDrawerHeader(
+            accountName: const CustomTextWidget(
+                text: "Guest User",
+                fontSize: 18, fontWeight: FontWeight.bold),
+            accountEmail: null,
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.grey.shade300,
+              child: const Icon(Icons.person, size: 50, color: Colors.black54),
+            ),
+            decoration: const BoxDecoration(color: Colors.white),
           ),
-          _buildDrawerItem(
-            icon: Icons.flight_takeoff,
-            text: "My Bookings",
-            onTap: () => Get.toNamed('/bookings'),
+          Expanded(
+            child: ListView(
+              children: [
+                DrawerItem(icon: FontAwesomeIcons.house, title: "Home"),
+                DrawerItem(icon: FontAwesomeIcons.infoCircle, title: "About Us"),
+
+                ExpansionTile(
+                  leading: const Icon(FontAwesomeIcons.listCheck, color: Colors.black54),
+                  title: const CustomTextWidget(
+                      text: "All Bookings", fontSize: 16, fontWeight: FontWeight.bold),
+                  children: [
+                    DrawerItem(icon: FontAwesomeIcons.plane, title: "Flight Booking", isSubItem: true),
+                    DrawerItem(icon: FontAwesomeIcons.hotel, title: "Hotel Booking", isSubItem: true),
+                    DrawerItem(icon: FontAwesomeIcons.bus, title: "Tour Booking", isSubItem: true),
+                    DrawerItem(icon: FontAwesomeIcons.passport, title: "Visa Booking", isSubItem: true),
+                  ],
+                ),
+                DrawerItem(icon: FontAwesomeIcons.history, title: "Booking History"),
+                DrawerItem(icon: FontAwesomeIcons.compass, title: "Discover"),
+                DrawerItem(icon: FontAwesomeIcons.blog, title: "Blogs"),
+                DrawerItem(icon: FontAwesomeIcons.heart, title: "Wishlist"),
+                DrawerItem(icon: FontAwesomeIcons.headset, title: "Support"),
+                DrawerItem(icon: FontAwesomeIcons.signInAlt, title: "Login"),
+              ],
+            ),
           ),
-          _buildDrawerItem(
-            icon: Icons.local_offer,
-            text: "Offers",
-            onTap: () => Get.toNamed('/offers'),
-          ),
-          _buildDrawerItem(
-            icon: Icons.settings,
-            text: "Settings",
-            onTap: () => Get.toNamed('/settings'),
-          ),
-          const Divider(color: Colors.white54, thickness: 1),
-          _buildDarkModeToggle(),
-          const Spacer(),
-          _buildLogoutButton(context),
-          const SizedBox(height: 20),
         ],
       ),
     );
   }
+}
 
-  Widget _buildDrawerHeader() {
-    return const UserAccountsDrawerHeader(
-      decoration: BoxDecoration(
-        color: AppColors.accent,
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(25),
-        ),
-      ),
-      accountName: CustomTextWidget(
-        text: "John Doe",
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
-      accountEmail: CustomTextWidget(
-        text: "john.doe@example.com",
-        fontSize: 14,
-        color: Colors.white70,
-      ),
-      currentAccountPicture: CircleAvatar(
-        backgroundColor: Colors.white,
-        child: Icon(Icons.person, size: 50, color: AppColors.primary),
-      ),
-    );
-  }
+class DrawerItem extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final bool isSubItem;
 
-  Widget _buildDrawerItem({required IconData icon, required String text, required VoidCallback onTap}) {
+  DrawerItem({super.key, required this.icon, required this.title, this.isSubItem = false});
+
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(icon, color: Colors.white, size: 28),
-      title: CustomTextWidget(text: text, fontSize: 16, color: Colors.white),
-      onTap: onTap,
-    );
-  }
-
-  Widget _buildDarkModeToggle() {
-    return SwitchListTile(
-      title: const CustomTextWidget(text: "Dark Mode", fontSize: 16, color: Colors.white),
-      value: false,
-      onChanged: (value) {
-        // Implement dark mode logic
-      },
-      activeColor: AppColors.accent,
-    );
-  }
-
-  Widget _buildLogoutButton(BuildContext context) {
-    return ListTile(
-      leading: const Icon(Icons.exit_to_app, color: Colors.redAccent, size: 28),
-      title: const CustomTextWidget(text: "Logout", fontSize: 16, color: Colors.redAccent),
-      onTap: () {
-        showLogoutDialog(context);
-      },
+      leading: isSubItem ? const SizedBox(width: 30) : Icon(icon, color: Colors.black54),
+      title: CustomTextWidget(
+       text:  title,
+        fontSize: isSubItem ? 14 : 16, fontWeight: isSubItem ? FontWeight.normal : FontWeight.bold,
+      ),
+      onTap: () {},
     );
   }
 }

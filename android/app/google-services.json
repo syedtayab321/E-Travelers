@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1002486189975",
+    "project_id": "etravelers-4303a",
+    "storage_bucket": "etravelers-4303a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002486189975:android:fdcf29c5978a5bd2d23ed2",
+        "android_client_info": {
+          "package_name": "com.example.e_traverlers"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZnvl4fnMXQamf9c8OQUA79PfUQZ--I2k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,12 +17,17 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: Column(
         children: [
+          // Profile Header
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-            decoration: const BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.only(
+            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [AppColors.primary, AppColors.primaryDark],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
               ),
@@ -30,51 +35,64 @@ class ProfileScreen extends StatelessWidget {
                 BoxShadow(color: Colors.black26, blurRadius: 10, offset: Offset(0, 5)),
               ],
             ),
-            child: const Column(
+            child: Column(
               children: [
                 CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage("assets/images/logo.png"),
+                  radius: 55,
+                  backgroundColor: Colors.white,
+                  child: CircleAvatar(
+                    radius: 52,
+                    backgroundImage: AssetImage("assets/images/logo.png"),
+                  ),
                 ),
-                SizedBox(height: 10),
-                CustomTextWidget(
+                const SizedBox(height: 10),
+                const CustomTextWidget(
                   text: "John Doe",
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                  color: Colors.white,
                 ),
-                CustomTextWidget(
+                const CustomTextWidget(
                   text: "john.doe@example.com",
                   fontSize: 16,
-                  color: AppColors.textSecondary,
+                  color: Colors.white70,
                 ),
               ],
             ),
           ),
           const SizedBox(height: 20),
+
+          // Profile Options List
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               children: [
-                _buildProfileOption((){
-                  Get.to(AccountSettingsScreen());
-                },FontAwesomeIcons.user, "Account Settings"),
-                const SizedBox(height: 20),
-                _buildProfileOption((){
-                  Get.to(const PrivacyPolicyScreen());
-                },FontAwesomeIcons.lock, "Privacy Policy"),
-                const SizedBox(height: 20),
-                _buildProfileOption((){
-                  Get.to(const HelpSupportScreen());
-                },FontAwesomeIcons.circleQuestion, "Help & Support"),
-                const SizedBox(height: 20),
-                _buildProfileOption((){
-                  Get.to(AccountSettingsScreen());
-                },FontAwesomeIcons.gear, "Settings"),
-                const SizedBox(height: 20),
-                _buildProfileOption((){
-                  showLogoutDialog(context);
-                },FontAwesomeIcons.rightFromBracket, "Logout", isLogout: true),
+                _buildProfileOption(
+                  onPressed: () => Get.to(AccountSettingsScreen()),
+                  icon: FontAwesomeIcons.user,
+                  title: "Account Settings",
+                ),
+                _buildProfileOption(
+                  onPressed: () => Get.to(const PrivacyPolicyScreen()),
+                  icon: FontAwesomeIcons.lock,
+                  title: "Privacy Policy",
+                ),
+                _buildProfileOption(
+                  onPressed: () => Get.to(const HelpSupportScreen()),
+                  icon: FontAwesomeIcons.circleQuestion,
+                  title: "Help & Support",
+                ),
+                _buildProfileOption(
+                  onPressed: () => Get.to(AccountSettingsScreen()),
+                  icon: FontAwesomeIcons.gear,
+                  title: "Settings",
+                ),
+                _buildProfileOption(
+                  onPressed: () => showLogoutDialog(context),
+                  icon: FontAwesomeIcons.rightFromBracket,
+                  title: "Logout",
+                  isLogout: true,
+                ),
               ],
             ),
           ),
@@ -83,20 +101,47 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileOption(VoidCallback onPressed, IconData icon, String title, {bool isLogout = false}) {
-    return Card(
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: ListTile(
-        leading: FaIcon(icon, color: isLogout ? Colors.red : AppColors.primaryDark, size: 20),
-        title: CustomTextWidget(
-          text: title,
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          color: Colors.black87,
+  Widget _buildProfileOption({
+    required VoidCallback onPressed,
+    required IconData icon,
+    required String title,
+    bool isLogout = false,
+  }) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 15),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
-        onTap:onPressed,
+        child: Row(
+          children: [
+            FaIcon(
+              icon,
+              color: isLogout ? Colors.red : AppColors.primaryDark,
+              size: 20,
+            ),
+            const SizedBox(width: 15),
+            Expanded(
+              child: CustomTextWidget(
+                text: title,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Colors.black87,
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
+          ],
+        ),
       ),
     );
   }

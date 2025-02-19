@@ -1,149 +1,121 @@
+import 'package:e_traverlers/CustomWidgets/custom_text_widget.dart';
 import 'package:e_traverlers/Screens/Auth/signup_screen.dart';
 import 'package:e_traverlers/Screens/Dashboard/bottom_bar_screen.dart';
+import 'package:e_traverlers/Utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Controllers/Auth/login_controller.dart';
-import '../../CustomWidgets/custom_elevated_button.dart';
-import '../../CustomWidgets/custom_text_widget.dart';
-import '../../CustomWidgets/custom_textformfield.dart';
-import '../../Utils/app_colors.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
-class LoginScreen extends StatelessWidget {
-  final LoginController controller = Get.put(LoginController());
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.4,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppColors.primary, AppColors.primaryDark],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+            const Row(
+              children: [
+                SizedBox(width: 20),
+                CustomTextWidget(
+                  text:"User Login",
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
                 ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/logo.png',
-                    width: 100,
-                    height: 100,
-                  ),
-                  const SizedBox(height: 20),
-                  const CustomTextWidget(
-                    text: "E-Travelers",
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                  const CustomTextWidget(
-                    text: "Explore the world with ease",
-                    fontSize: 18,
-                    color: Colors.white70,
-                  ),
-                ],
-              ),
+              ],
             ),
+            const SizedBox(height: 40),
             Container(
-              height: Get.height,
-              padding: const EdgeInsets.all(24),
-              decoration: const BoxDecoration(
-                color: AppColors.background,
-                boxShadow: [
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
-                    blurRadius: 8,
+                    blurRadius: 20,
                     spreadRadius: 2,
-                  ),
+                  )
                 ],
               ),
               child: Column(
                 children: [
-                  CustomTextFormField(
-                    controller: controller.emailController,
-                    hintText: "Email or Phone Number",
-                    prefixIcon: Icons.email_outlined,
+                  IntlPhoneField(
+                    decoration: InputDecoration(
+                      labelText: 'Phone Number',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(),
+                      ),
+                    ),
+                    initialCountryCode: 'PK',
                   ),
                   const SizedBox(height: 20),
-                  Obx(() => CustomTextFormField(
-                    controller: controller.passwordController,
-                    hintText: "Password",
-                    prefixIcon: Icons.lock_outline,
-                    obscureText: !controller.isPasswordVisible.value,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        controller.isPasswordVisible.value
-                            ? Icons.visibility
-                            : Icons.visibility_off,
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        backgroundColor: Colors.blue.shade900,
                       ),
                       onPressed: () {
-                        controller.isPasswordVisible.value =
-                        !controller.isPasswordVisible.value;
+                        Get.to(BottomBarScreen());
                       },
-                    ),
-                  )),
-                  const SizedBox(height: 20),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {},
                       child: const CustomTextWidget(
-                        text: "Forgot Password?",
-                        fontSize: 14,
-                        color: AppColors.primaryDark,
-                        fontWeight: FontWeight.bold,
+                       text:  "LOGIN",
+                       color: Colors.white, fontSize: 16,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
-                  CustomElevatedButton(
-                    text: "Login",
-                    backgroundColor: AppColors.primary,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      controller.performLogin();
-                    },
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const CustomTextWidget(text: "Not registered yet? "),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(const RegisterScreen());
+                        },
+                        child: CustomTextWidget(
+                          text: "Register Now",
+                          color: Colors.blue.shade900, fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(SignupScreen());
-                    },
-                    child: RichText(
-                      text: const TextSpan(
-                        text: "Don't have an account? ",
-                        style: TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 14,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: "Create an account",
-                            style: TextStyle(
-                              color: AppColors.primaryDark,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                  const Divider(),
+                  const CustomTextWidget(text: "OR", color: Colors.grey),
+                  const Divider(),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.red.shade600,
+                        radius: 20,
+                        child: const Icon(Icons.g_mobiledata, color: Colors.white, size: 30),
                       ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 30),
-                  CustomElevatedButton(
-                    text: "Continue without login",
-                    backgroundColor: AppColors.primaryDark,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      Get.to(MainDashboardScreen());
-                    },
+                      const SizedBox(width: 20),
+                      CircleAvatar(
+                        backgroundColor: Colors.blue.shade800,
+                        radius: 20,
+                        child: const Icon(Icons.facebook, color: Colors.white, size: 30),
+                      ),
+                    ],
                   ),
                 ],
               ),

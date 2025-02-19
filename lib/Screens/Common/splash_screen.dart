@@ -1,8 +1,8 @@
 import 'package:e_traverlers/CustomWidgets/custom_text_widget.dart';
-import 'package:e_traverlers/Screens/Common/start_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:get/get.dart';
+import '../Auth/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,8 +15,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 5), () {
-      Get.off(StartScreen());
+    Timer(const Duration(seconds: 3), () {
+      Get.off(const LoginScreen());
     });
   }
 
