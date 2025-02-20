@@ -1,7 +1,7 @@
 import 'package:e_traverlers/CustomWidgets/custom_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../Controllers/BlogControllers/blog_controller.dart';
+import '../../../Controllers/DumyDataControllers/blog_controller.dart';
 import '../../../Utils/app_colors.dart';
 
 class AllBlogScreen extends StatelessWidget {

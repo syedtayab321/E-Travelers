@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../Controllers/BookingControllers/booking_controller.dart';
+import '../../../Controllers/DumyDataControllers/booking_controller.dart';
 import '../../../CustomWidgets/custom_text_widget.dart';
 import '../../../Utils/app_colors.dart';
 

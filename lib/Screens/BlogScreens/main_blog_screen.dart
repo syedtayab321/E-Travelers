@@ -1,7 +1,7 @@
 import 'package:e_traverlers/Screens/BlogScreens/blog_top_navigation_bar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Controllers/BlogControllers/blog_top_bar_controller.dart';
+import '../../Controllers/Common/blog_top_bar_controller.dart';
 import '../../CustomWidgets/custom_text_widget.dart';
 import '../../Utils/app_colors.dart';
 

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../../Models/BookingModals/booking_modal.dart';
+import '../../ApiDataModels/booking_data_modal.dart';
 
 class BookingController extends GetxController {
   var isLoading = true.obs;

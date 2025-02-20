@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Controllers/HotelControllers/hotel_data_controller.dart';
+import '../../Controllers/DumyDataControllers/hotel_data_controller.dart';
 import '../../CustomWidgets/custom_text_widget.dart';
 import '../../Utils/app_colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -47,7 +47,7 @@ class HotelCardScreen extends StatelessWidget {
                         borderRadius:
                         const BorderRadius.vertical(top: Radius.circular(15)),
                         child: Image.network(
-                          hotel.imageUrl,
+                          hotel.imageUrl!,
                           height: 200,
                           width: double.infinity,
                           fit: BoxFit.cover,
@@ -83,7 +83,7 @@ class HotelCardScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomTextWidget(
-                            text: hotel.name,
+                            text: hotel.hotelName!,
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
                         const SizedBox(height: 5),
@@ -94,7 +94,7 @@ class HotelCardScreen extends StatelessWidget {
                             const SizedBox(width: 5),
                             Expanded(
                               child: CustomTextWidget(
-                                  text: hotel.location,
+                                  text: hotel.location!,
                                   color: Colors.grey,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis),
@@ -106,7 +106,7 @@ class HotelCardScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomTextWidget(
-                                text: '\$${hotel.price.toString()}/night',
+                                text: '\$${hotel.pricePerNight.toString()}/night',
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.primary),

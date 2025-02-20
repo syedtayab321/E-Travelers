@@ -1,7 +1,7 @@
 import 'package:e_traverlers/CustomWidgets/custom_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Controllers/FlightControllers/flight_controller.dart';
+import '../../Controllers/DumyDataControllers/flight_controller.dart';
 import '../../Utils/app_colors.dart';
 
 class FlightCardsScreen extends StatelessWidget {
@@ -35,14 +35,14 @@ class FlightCardsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomTextWidget(
-                  text:flight.price,
+                  text:flight.price.toString(),
                   fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary),
                   const SizedBox(height: 8),
                   Row(
                     children: [
                       Image.asset("assets/images/logo1.jpg", height: 24),
                       const SizedBox(width: 8),
-                      CustomTextWidget(text:flight.airline, fontSize: 16, fontWeight: FontWeight.bold),
+                      CustomTextWidget(text:flight.airline!, fontSize: 16, fontWeight: FontWeight.bold),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -52,24 +52,24 @@ class FlightCardsScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomTextWidget(text:flight.departureTime,fontSize: 16, fontWeight: FontWeight.bold),
-                          CustomTextWidget(text:flight.departureAirport,color: Colors.grey),
-                          CustomTextWidget(text:flight.departureDate, color: Colors.grey),
+                          CustomTextWidget(text:flight.departureTime!,fontSize: 16, fontWeight: FontWeight.bold),
+                          CustomTextWidget(text:flight.departureAirport!,color: Colors.grey),
+                          CustomTextWidget(text:flight.departureDate!, color: Colors.grey),
                         ],
                       ),
                       Column(
                         children: [
-                          CustomTextWidget(text:flight.duration, color: Colors.grey),
+                          CustomTextWidget(text:flight.duration!, color: Colors.grey),
                           const Icon(Icons.airplanemode_active, color: Colors.grey),
-                          CustomTextWidget(text:flight.stops,color: Colors.grey),
+                          CustomTextWidget(text:flight.stops!,color: Colors.grey),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          CustomTextWidget(text:flight.arrivalTime, fontSize: 16, fontWeight: FontWeight.bold),
-                          CustomTextWidget(text:flight.arrivalAirport,color: Colors.grey),
-                          CustomTextWidget(text:flight.arrivalDate, color: Colors.grey),
+                          CustomTextWidget(text:flight.arrivalTime!, fontSize: 16, fontWeight: FontWeight.bold),
+                          CustomTextWidget(text:flight.arrivalAirport!,color: Colors.grey),
+                          CustomTextWidget(text:flight.arrivalDate!, color: Colors.grey),
                         ],
                       ),
                     ],
@@ -78,7 +78,7 @@ class FlightCardsScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      flight.refundable
+                      flight.refundable!
                           ? Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(color: Colors.green.shade100, borderRadius: BorderRadius.circular(8)),

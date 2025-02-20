@@ -1,10 +1,10 @@
+import 'package:e_traverlers/ApiDataModels/hotels_data_model.dart';
 import 'package:get/get.dart';
-import '../../Models/DataModels/hotel_data_modal.dart';
 import 'dart:math';
 
 class HotelController extends GetxController {
   var isLoading = true.obs;
-  var hotels = <HotelModel>[].obs;
+  var hotels = <HotelDataModel>[].obs;
 
   @override
   void onInit() {
@@ -17,23 +17,23 @@ class HotelController extends GetxController {
 
     var random = Random();
     hotels.value = [
-      HotelModel(
-          name: 'Grand Hotel',
+      HotelDataModel(
+          hotelName: 'Grand Hotel',
           location: 'New York',
           imageUrl: 'assets/images/hotel1.jpg',
-          price: 150.0,
+          pricePerNight: 150.0,
           rating: (random.nextDouble() * 5).clamp(3.5, 5.0)),
-      HotelModel(
-          name: 'Ocean View',
+      HotelDataModel(
+          hotelName: 'Ocean View',
           location: 'California',
           imageUrl: 'assets/images/hotel1.jpg',
-          price: 200.0,
+          pricePerNight: 200.0,
           rating: (random.nextDouble() * 5).clamp(3.5, 5.0)),
-      HotelModel(
-          name: 'Mountain Resort',
+      HotelDataModel(
+          hotelName: 'Mountain Resort',
           location: 'Colorado',
           imageUrl: 'assets/images/hotel1.jpg',
-          price: 180.0,
+          pricePerNight: 180.0,
           rating: (random.nextDouble() * 5).clamp(3.5, 5.0)),
     ];
 

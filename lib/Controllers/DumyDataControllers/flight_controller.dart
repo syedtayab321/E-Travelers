@@ -1,8 +1,8 @@
+import 'package:e_traverlers/ApiDataModels/flight_data_model.dart';
 import 'package:get/get.dart';
-import '../../Models/DataModels/flight_data_modal.dart';
 
 class FlightController extends GetxController {
-  var flights = <Flight>[].obs;
+  var flights = <FlightDataModal>[].obs;
 
   @override
   void onInit() {
@@ -12,7 +12,7 @@ class FlightController extends GetxController {
 
   void fetchFlights() {
     flights.assignAll([
-      Flight(
+      FlightDataModal(
         airline: "Emirates",
         flightNumber: "EK-603",
         departureTime: "10:40 PM",
@@ -23,11 +23,11 @@ class FlightController extends GetxController {
         arrivalAirport: "JED",
         stops: "1 Stop",
         duration: "9h 50m",
-        price: "PKR 507,476",
+        price: double.parse("PKR 507,476"),
         refundable: true,
-        seatsLeft: 9,
+        seatsLeft: 9
       ),
-      Flight(
+      FlightDataModal(
         airline: "Emirates",
         flightNumber: "EK-806",
         departureTime: "11:10 AM",
@@ -38,9 +38,9 @@ class FlightController extends GetxController {
         arrivalAirport: "KHI",
         stops: "1 Stop",
         duration: "12h 0m",
-        price: "PKR 507,476",
+        price: double.parse("PKR 507,476"),
         refundable: true,
-        seatsLeft: 9,
+        seatsLeft: 10
       ),
     ]);
   }

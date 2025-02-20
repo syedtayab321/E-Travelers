@@ -2,7 +2,7 @@ import 'package:e_traverlers/Screens/HotelScreens/hotel_card_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../Controllers/HotelControllers/hotel_search_controller.dart';
+import '../../Controllers/SearchControllers/hotel_search_controller.dart';
 import '../../CustomWidgets/custom_text_widget.dart';
 import '../../Utils/app_colors.dart';
 

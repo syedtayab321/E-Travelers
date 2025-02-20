@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../Controllers/TourControllers/tour_search_controller.dart';
+import '../../Controllers/SearchControllers/tour_search_controller.dart';
 import '../../CustomWidgets/custom_text_widget.dart';
 import '../../Utils/app_colors.dart';
 
