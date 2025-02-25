@@ -1,12 +1,12 @@
+import 'package:e_traverlers/Controllers/HotelControllers/hotel_search_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Controllers/DumyDataControllers/hotel_data_controller.dart';
 import '../../CustomWidgets/custom_text_widget.dart';
 import '../../Utils/app_colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HotelCardScreen extends StatelessWidget {
-  final HotelController hotelController = Get.put(HotelController());
+  final HotelSearchController hotelController = Get.put(HotelSearchController());
   HotelCardScreen({super.key});
 
   @override
@@ -29,9 +29,9 @@ class HotelCardScreen extends StatelessWidget {
         }
         return ListView.builder(
           padding: const EdgeInsets.all(10),
-          itemCount: hotelController.hotels.length,
+          itemCount: hotelController.searchResults.length,
           itemBuilder: (context, index) {
-            final hotel = hotelController.hotels[index];
+            final hotel = hotelController.searchResults[index];
             return Card(
               margin: const EdgeInsets.symmetric(vertical: 10),
               shape: RoundedRectangleBorder(
@@ -47,7 +47,7 @@ class HotelCardScreen extends StatelessWidget {
                         borderRadius:
                         const BorderRadius.vertical(top: Radius.circular(15)),
                         child: Image.network(
-                          hotel.imageUrl!,
+                          hotel.imageUrl,
                           height: 200,
                           width: double.infinity,
                           fit: BoxFit.cover,
@@ -83,7 +83,7 @@ class HotelCardScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomTextWidget(
-                            text: hotel.hotelName!,
+                            text: hotel.name,
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
                         const SizedBox(height: 5),
@@ -94,7 +94,7 @@ class HotelCardScreen extends StatelessWidget {
                             const SizedBox(width: 5),
                             Expanded(
                               child: CustomTextWidget(
-                                  text: hotel.location!,
+                                  text: hotel.location,
                                   color: Colors.grey,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis),

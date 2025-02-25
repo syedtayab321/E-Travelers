@@ -2,7 +2,7 @@ import 'package:e_traverlers/Screens/HotelScreens/hotel_card_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../Controllers/SearchControllers/hotel_search_controller.dart';
+import '../../Controllers/HotelControllers/hotel_search_controller.dart';
 import '../../CustomWidgets/custom_text_widget.dart';
 import '../../Utils/app_colors.dart';
 
@@ -82,8 +82,8 @@ class HotelSearchScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildDateTile("Check-In", controller.hotelSearchModel.value.checkInDate, controller.updateCheckInDate),
-        _buildDateTile("Check-Out", controller.hotelSearchModel.value.checkOutDate, controller.updateCheckOutDate),
+        _buildDateTile("Check-In", controller.checkInDate.value, controller.updateCheckInDate),
+        _buildDateTile("Check-Out", controller.checkInDate.value, controller.updateCheckOutDate),
       ],
     );
   }
@@ -117,9 +117,9 @@ class HotelSearchScreen extends StatelessWidget {
   Widget _buildGuestsAndRoomSelector() {
     return Obx(() => Column(
       children: [
-        _buildDropdownTile("Guests", controller.hotelSearchModel.value.guests.toString(), List.generate(10, (index) => (index + 1).toString()), (value) => controller.updateGuests(int.parse(value))),
+        _buildDropdownTile("Guests", controller.guests.value.toString(), List.generate(10, (index) => (index + 1).toString()), (value) => controller.updateGuests(int.parse(value))),
         const SizedBox(height: 12),
-        _buildDropdownTile("Room Type", controller.hotelSearchModel.value.roomType, ["Standard", "Deluxe", "Suite"], (value) => controller.updateRoomType(value)),
+        _buildDropdownTile("Room Type", controller.roomType.value, ["Standard", "Deluxe", "Suite"], (value) => controller.updateRoomType(value)),
       ],
     ));
   }

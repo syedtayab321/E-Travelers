@@ -11,7 +11,7 @@ class BottomNavController extends GetxController {
   final List<Widget> pages = [
     const HomeScreen(),
     const ProfileScreen(),
-    BookingHistoryScreen(),
+    UniversalBookingScreen(),
     const ContactSupportScreen(),
   ];
 

@@ -1,19 +1,14 @@
 import 'package:e_traverlers/CustomWidgets/custom_text_widget.dart';
 import 'package:e_traverlers/Screens/Auth/signup_screen.dart';
-import 'package:e_traverlers/Screens/Dashboard/bottom_bar_screen.dart';
 import 'package:e_traverlers/Utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import '../../FirebaseFunctions/login.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  final LoginController loginController = Get.put(LoginController());
+  LoginScreen({super.key});
 
-  @override
-  _LoginScreenState createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 SizedBox(width: 20),
                 CustomTextWidget(
-                  text:"User Login",
+                  text: "User Login",
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: AppColors.primary,
@@ -50,18 +45,28 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: Column(
                 children: [
-                  IntlPhoneField(
+                  TextField(
+                    controller: loginController.emailController,
                     decoration: InputDecoration(
-                      labelText: 'Phone Number',
+                      labelText: 'Email',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(),
                       ),
                     ),
-                    initialCountryCode: 'PK',
                   ),
                   const SizedBox(height: 20),
-                  SizedBox(
+                  TextField(
+                    controller: loginController.passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Obx(() => SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -71,15 +76,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         backgroundColor: Colors.blue.shade900,
                       ),
-                      onPressed: () {
-                        Get.to(BottomBarScreen());
-                      },
-                      child: const CustomTextWidget(
-                       text:  "LOGIN",
-                       color: Colors.white, fontSize: 16,
+                      onPressed:
+                      loginController.isLoading.value ? null : loginController.loginUser,
+                      child: loginController.isLoading.value
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const CustomTextWidget(
+                        text: "LOGIN",
+                        color: Colors.white,
+                        fontSize: 16,
                       ),
                     ),
-                  ),
+                  )),
                   const SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -87,33 +94,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       const CustomTextWidget(text: "Not registered yet? "),
                       GestureDetector(
                         onTap: () {
-                          Get.to(const RegisterScreen());
+                          Get.to(RegisterScreen());
                         },
                         child: CustomTextWidget(
                           text: "Register Now",
-                          color: Colors.blue.shade900, fontWeight: FontWeight.bold,
+                          color: Colors.blue.shade900,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  const Divider(),
-                  const CustomTextWidget(text: "OR", color: Colors.grey),
-                  const Divider(),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.red.shade600,
-                        radius: 20,
-                        child: const Icon(Icons.g_mobiledata, color: Colors.white, size: 30),
-                      ),
-                      const SizedBox(width: 20),
-                      CircleAvatar(
-                        backgroundColor: Colors.blue.shade800,
-                        radius: 20,
-                        child: const Icon(Icons.facebook, color: Colors.white, size: 30),
                       ),
                     ],
                   ),

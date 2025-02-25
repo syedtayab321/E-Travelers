@@ -1,11 +1,11 @@
+import 'package:e_traverlers/Controllers/FlightControllers/flight_controller.dart';
 import 'package:e_traverlers/CustomWidgets/custom_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Controllers/DumyDataControllers/flight_controller.dart';
 import '../../Utils/app_colors.dart';
 
 class FlightCardsScreen extends StatelessWidget {
-  final FlightController flightController = Get.put(FlightController());
+  final FlightSearchController controller = Get.put(FlightSearchController());
   FlightCardsScreen({super.key});
 
   @override
@@ -19,9 +19,9 @@ class FlightCardsScreen extends StatelessWidget {
       ),
       body: Obx(
             () => ListView.builder(
-          itemCount: flightController.flights.length,
+          itemCount: controller.flights.length,
           itemBuilder: (context, index) {
-            final flight = flightController.flights[index];
+            final flight = controller.flights[index];
 
             return Container(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -54,14 +54,14 @@ class FlightCardsScreen extends StatelessWidget {
                         children: [
                           CustomTextWidget(text:flight.departureTime!,fontSize: 16, fontWeight: FontWeight.bold),
                           CustomTextWidget(text:flight.departureAirport!,color: Colors.grey),
-                          CustomTextWidget(text:flight.departureDate!, color: Colors.grey),
+                          CustomTextWidget(text:flight.departDate.toString(), color: Colors.grey),
                         ],
                       ),
                       Column(
                         children: [
                           CustomTextWidget(text:flight.duration!, color: Colors.grey),
                           const Icon(Icons.airplanemode_active, color: Colors.grey),
-                          CustomTextWidget(text:flight.stops!,color: Colors.grey),
+                          // CustomTextWidget(text:flight.stops!,color: Colors.grey),
                         ],
                       ),
                       Column(
@@ -69,29 +69,29 @@ class FlightCardsScreen extends StatelessWidget {
                         children: [
                           CustomTextWidget(text:flight.arrivalTime!, fontSize: 16, fontWeight: FontWeight.bold),
                           CustomTextWidget(text:flight.arrivalAirport!,color: Colors.grey),
-                          CustomTextWidget(text:flight.arrivalDate!, color: Colors.grey),
+                          CustomTextWidget(text:flight.arrivalDate.toString(), color: Colors.grey),
                         ],
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      flight.refundable!
-                          ? Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(color: Colors.green.shade100, borderRadius: BorderRadius.circular(8)),
-                        child: const CustomTextWidget(text:"Refundable",color: Colors.green, fontSize: 12),
-                      ) : const SizedBox(),
-                      flight.seatsLeft > 0
-                          ? Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(color: Colors.yellow.shade100, borderRadius: BorderRadius.circular(8)),
-                        child: CustomTextWidget(text:"${flight.seatsLeft} Seats left", color: Colors.yellow.shade800, fontSize: 12),
-                      ) : const SizedBox(),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     flight.refundable!
+                  //         ? Container(
+                  //       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  //       decoration: BoxDecoration(color: Colors.green.shade100, borderRadius: BorderRadius.circular(8)),
+                  //       child: const CustomTextWidget(text:"Refundable",color: Colors.green, fontSize: 12),
+                  //     ) : const SizedBox(),
+                  //     flight.seatsLeft > 0
+                  //         ? Container(
+                  //       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  //       decoration: BoxDecoration(color: Colors.yellow.shade100, borderRadius: BorderRadius.circular(8)),
+                  //       child: CustomTextWidget(text:"${flight.seatsLeft} Seats left", color: Colors.yellow.shade800, fontSize: 12),
+                  //     ) : const SizedBox(),
+                  //   ],
+                  // ),
                 ],
               ),
             );

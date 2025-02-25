@@ -1,16 +1,33 @@
 import 'package:e_traverlers/Controllers/Auth/user_more_details_controller.dart';
 import 'package:e_traverlers/CustomWidgets/custom_text_widget.dart';
+import 'package:e_traverlers/FirebaseFunctions/create_account.dart';
 import 'package:e_traverlers/Screens/Dashboard/bottom_bar_screen.dart';
 import 'package:e_traverlers/Utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
-class UserMoreDetailRegistration extends StatelessWidget {
-  UserMoreDetailRegistration({super.key});
+class UserMoreDetailRegistration extends StatefulWidget {
 
+  final TextEditingController fullName;
+  final TextEditingController email;
+  final String password;
+  const UserMoreDetailRegistration({super.key, required this.fullName, required this.email , required this.password});
+
+  @override
+  State<UserMoreDetailRegistration> createState() => _UserMoreDetailRegistrationState();
+}
+
+class _UserMoreDetailRegistrationState extends State<UserMoreDetailRegistration> {
   final UserMoreDetailsController controller = Get.put(UserMoreDetailsController());
+
+  var isLoading = false.obs;
+
   final DOBController dobController = Get.put(DOBController());
+  final TextEditingController phoneNoController = TextEditingController();
+  final TextEditingController cnicController = TextEditingController();
+  final TextEditingController passportController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,17 +35,11 @@ class UserMoreDetailRegistration extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const CustomTextWidget(text: "Profile", color: Colors.black),
+        title: const CustomTextWidget(text: "Create Account", color: Colors.black,fontSize: 20,),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.red),
           onPressed: () {},
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home, color: Colors.red),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -43,22 +54,13 @@ class UserMoreDetailRegistration extends StatelessWidget {
                       backgroundColor: Colors.grey.shade300,
                       child: const Icon(Icons.person, size: 60, color: Colors.grey),
                     ),
-                    const Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.red,
-                        radius: 15,
-                        child: Icon(Icons.edit, size: 15, color: Colors.white),
-                      ),
-                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-              buildTextField("FULL NAME", "SYED TAYYAB"),
+              buildTextField("FULL NAME",'Full Name Here',widget.fullName,TextInputType.text),
               const SizedBox(height: 10),
-              buildTextField("EMAIL", "Type your email"),
+              buildTextField("EMAIL",'Email Here',widget.email,TextInputType.text),
               const SizedBox(height: 10),
               buildPhoneField(),
               const SizedBox(height: 10),
@@ -66,30 +68,50 @@ class UserMoreDetailRegistration extends StatelessWidget {
               const SizedBox(height: 10),
               buildGenderDropdown(),
               const SizedBox(height: 10),
-              buildTextField("CNIC", "XXXXX-XXXXXXXX-X"),
+              buildTextField("CNIC", "XXXXX-XXXXXXXX-X",cnicController,TextInputType.number),
               const SizedBox(height: 10),
-              buildTextField("PASSPORT", "XXXXXXXXXXXX"),
+              buildTextField("PASSPORT", "XXXXXXXXXXXX",passportController,TextInputType.text),
               const SizedBox(height: 10),
               buildDOBField(context),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Get.to(BottomBarScreen());
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+              Obx((){
+                return isLoading.value ? const CircularProgressIndicator() :
+                ElevatedButton(
+                  onPressed:() async{
+                    isLoading.value=true;
+                    try{
+                      await registerUser(
+                        fullName: widget.fullName.text,
+                        email: widget.email.text,
+                        password: widget.password,
+                        phone: phoneNoController.text,
+                        nationality: controller.selectedNationality.value!,
+                        gender: controller.selectedGender.value!,
+                        cnic: cnicController.text,
+                        passport: passportController.text,
+                        dob: dobController.selectedDate.value!,
+                      );
+                    }catch(e){
+                      print(e.toString());
+                    }finally{
+                      isLoading.value=false;
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                ),
-                child: const Center(
-                  child: CustomTextWidget(
-                      text: 'REGISTER',
-                      fontSize: 16,
-                      color: Colors.white),
-                ),
-              ),
+                  child: const Center(
+                    child: CustomTextWidget(
+                        text: 'REGISTER',
+                        fontSize: 16,
+                        color: Colors.white),
+                  ),
+                );
+              })
             ],
           ),
         ),
@@ -97,13 +119,15 @@ class UserMoreDetailRegistration extends StatelessWidget {
     );
   }
 
-  Widget buildTextField(String label, String placeholder) {
+  Widget buildTextField(String label, String placeholder, TextEditingController controller ,TextInputType type) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomTextWidget(text: label, fontWeight: FontWeight.bold),
         const SizedBox(height: 5),
-        TextField(
+        TextFormField(
+          controller: controller,
+          keyboardType:type ,
           decoration: InputDecoration(
             hintText: placeholder,
             filled: true,
@@ -131,6 +155,7 @@ class UserMoreDetailRegistration extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: IntlPhoneField(
+            controller: phoneNoController,
             decoration: InputDecoration(
               labelText: 'Phone Number',
               border: OutlineInputBorder(
@@ -218,9 +243,11 @@ class UserMoreDetailRegistration extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide.none,
             ),
-            suffixIcon: const Icon(Icons.calendar_today, color: Colors.red),
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.calendar_today, color: Colors.red),
+              onPressed: () => dobController.selectDate(context),
+            ),
           ),
-          onTap: () => dobController.selectDate(context),
         )),
       ],
     );

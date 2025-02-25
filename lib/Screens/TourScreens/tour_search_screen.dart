@@ -1,14 +1,23 @@
+import 'package:e_traverlers/Utils/CustomSnakbars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../Controllers/SearchControllers/tour_search_controller.dart';
+import '../../Controllers/TourControllers/tour_search_controller.dart';
 import '../../CustomWidgets/custom_text_widget.dart';
+import '../../Data/lists_objects.dart';
 import '../../Utils/app_colors.dart';
 
-class TourSearchScreen extends StatelessWidget {
-  final TourSearchController controller = Get.put(TourSearchController());
+class TourSearchScreen extends StatefulWidget {
 
-  TourSearchScreen({super.key});
+  const TourSearchScreen({super.key});
+
+  @override
+  State<TourSearchScreen> createState() => _TourSearchScreenState();
+}
+
+class _TourSearchScreenState extends State<TourSearchScreen> {
+  final TourSearchController controller = Get.put(TourSearchController());
+  var isLoading = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +55,7 @@ class TourSearchScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            _buildInputField("Destination", "Enter tour location", controller.updateDestination),
+            _buildInputField(),
             const SizedBox(height: 16),
             _buildDateSelector(),
             const SizedBox(height: 16),
@@ -59,28 +68,27 @@ class TourSearchScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInputField(String label, String placeholder, Function(String) onChanged) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CustomTextWidget(text: label, fontWeight: FontWeight.bold),
-        const SizedBox(height: 5),
-        Container(
-          decoration: _boxShadowDecoration(),
-          child: TextField(
-            onChanged: onChanged,
-            decoration: InputDecoration(
-              hintText: placeholder,
-              prefixIcon: const Icon(Icons.explore, color: AppColors.primary),
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-            ),
-          ),
-        ),
-      ],
-    );
+  Widget _buildInputField() {
+    List<String> sortedCities = List.from(pakistanCities)..sort(); // Sort the list
+
+    return Obx(() {
+      String selectedValue = controller.tourSearchModel.value.location;
+
+      if (!sortedCities.contains(selectedValue)) {
+        selectedValue = sortedCities.first;
+        controller.updateLocation(selectedValue);
+      }
+
+      return _buildDropdownTile(
+        "Destination",
+        selectedValue,
+        sortedCities, // Use the sorted list
+            (value) => controller.updateLocation(value),
+      );
+    });
   }
+
+
 
   Widget _buildDateSelector() {
     return GestureDetector(
@@ -120,9 +128,13 @@ class TourSearchScreen extends StatelessWidget {
   Widget _buildTravelersAndTourTypeSelector() {
     return Obx(() => Column(
       children: [
-        _buildDropdownTile("Travelers", controller.tourSearchModel.value.travelers.toString(), List.generate(10, (index) => (index + 1).toString()), (value) => controller.updateTravelers(int.parse(value))),
+        // _buildDropdownTile("Travelers", controller.tourSearchModel.value.travelers.toString(), List.generate(10, (index) => (index + 1).toString()), (value) => controller.updateTravelers(int.parse(value))),
         const SizedBox(height: 12),
-        _buildDropdownTile("Tour Type", controller.tourSearchModel.value.tourType, ["Adventure", "Cultural", "Relaxation", "Historical"], (value) => controller.updateTourType(value)),
+        _buildDropdownTile(
+          "Tour Type",
+          controller.tourSearchModel.value.tourType,
+          tourTypes, (value) => controller.updateTourType(value),
+        ),
       ],
     ));
   }
@@ -153,24 +165,36 @@ class TourSearchScreen extends StatelessWidget {
   }
 
   Widget _buildSearchButton() {
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 14),
-        elevation: 5,
-        shadowColor: AppColors.primary.withOpacity(0.5),
-      ),
-      child: const Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CustomTextWidget(text: "SEARCH", color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
-          SizedBox(width: 8),
-          Icon(Icons.search, color: Colors.white),
-        ],
-      ),
-    );
+    return Obx((){
+      return isLoading.value ? const CircularProgressIndicator() :
+      ElevatedButton(
+        onPressed: () async {
+          isLoading.value =true;
+          try{
+            await controller.searchTours();
+          } catch(e){
+            showErrorSnackbar('error', 'error to search Modal');
+          }finally{
+            isLoading.value = false;
+          }
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 14),
+          elevation: 5,
+          shadowColor: AppColors.primary.withOpacity(0.5),
+        ),
+        child: const Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomTextWidget(text: "SEARCH", color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+            SizedBox(width: 8),
+            Icon(Icons.search, color: Colors.white),
+          ],
+        ),
+      );
+    });
   }
 
   BoxDecoration _boxShadowDecoration() {

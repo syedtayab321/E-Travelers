@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:country_picker/country_picker.dart';
-import '../../Controllers/SearchControllers/visa_search_controller.dart';
+import '../../Controllers/VisaControllers/visa_controllers.dart';
 import '../../CustomWidgets/custom_text_widget.dart';
 import '../../Utils/app_colors.dart';
 
