@@ -24,7 +24,7 @@ class AllBlogScreen extends StatelessWidget {
   Widget _buildBlogList() {
     return Obx(() {
       var filteredBlogs = controller.blogs
-          .where((blog) => blog.category == blogType || blogType == "All Blogs")
+          .where((blog) => blog.blogType == blogType || blogType == "All Blogs")
           .toList();
 
       if (filteredBlogs.isEmpty) {
@@ -49,13 +49,13 @@ class AllBlogScreen extends StatelessWidget {
                    imageUrl: blog.image ?? "",
                    title: blog.title ?? "No Title",
                    content: blog.content ?? "No Description",
-                   category: blog.category ?? "Unknown",
+                   category: blog.blogType ?? "Unknown",
                    date: blog.createdAt.toString()?? "No Date",
                ));
              },
             child: _buildBlogCard(
               blog.image ?? "", // Ensure no null values
-              blog.category ?? "Unknown",
+              blog.blogType ?? "Unknown",
               blog.title ?? "No Title",
               blog.content ?? "No Description",
               blog.createdAt.toString() ?? "No Date",

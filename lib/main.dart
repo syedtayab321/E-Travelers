@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      // home: const SplashScreen(),
-      home: BottomBarScreen(),
+      home: const SplashScreen(),
+      // home: BottomBarScreen(),
     );
   }
 }

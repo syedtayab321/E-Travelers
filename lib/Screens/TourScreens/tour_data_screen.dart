@@ -2,7 +2,6 @@ import 'package:e_traverlers/Screens/TourScreens/tour_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../CustomWidgets/custom_text_widget.dart';
-import '../../Data/locatioN_images_list.dart';
 import '../../Modals/tour_modal.dart';
 import '../../utils/app_colors.dart';
 
@@ -38,9 +37,6 @@ class TourDataScreen extends StatelessWidget {
           itemCount: searchResults.length,
           itemBuilder: (context, index) {
             TourSearchModel tour = searchResults[index];
-            String imagePath = LocationImages.images[tour.location] ??
-                'https://example.com/images/default.jpg';
-
             return Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -56,7 +52,7 @@ class TourDataScreen extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(15),
                       child: Image.network(
-                        imagePath,
+                        tour.imageURL,
                         width: 120,
                         height: 120,
                         fit: BoxFit.cover,

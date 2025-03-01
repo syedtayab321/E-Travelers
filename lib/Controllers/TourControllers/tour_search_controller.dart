@@ -6,25 +6,15 @@ import '../../Modals/tour_modal.dart';
 class TourSearchController extends GetxController {
   var tourSearchModel = TourSearchModel(
     name: '',
-    location: '',
+    location: 'Islamabad',
     pricePerPerson: '',
     tourType: 'Adventure',
     description: '',
     startDate: DateTime.now(),
-    duration: 'One Month',
-    includedServices: [
-      "Luxury Bus Transport",
-      "Hotel Accommodation",
-      "Daily Breakfast & Dinner",
-      "Entry Tickets",
-      "Tour Guide",
-    ],
-    excludedServices: [
-      "Lunch Meals",
-      "Personal Expenses",
-      "Travel Insurance",
-      "Emergency Medical Expenses",
-    ],
+    duration: '',
+    includedServices: [],
+    excludedServices: [],
+    imageURL: 'https://i.ytimg.com/vi/SnZDopmEGqs/maxresdefault.jpg'
   ).obs;
 
   var isLoading = false.obs;
@@ -60,13 +50,9 @@ class TourSearchController extends GetxController {
           .get();
 
       List<TourSearchModel> results = querySnapshot.docs.map((doc) {
-        return TourSearchModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+        return TourSearchModel.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
-
-      // Store fetched data in the model
-      tourSearchModel.update((model) {
-        // No searchResults field in TourModel, instead return a list separately.
-      });
+      tourSearchModel.update((model) {});
       Get.to(() => TourDataScreen(), arguments: results);
 
     } catch (e) {

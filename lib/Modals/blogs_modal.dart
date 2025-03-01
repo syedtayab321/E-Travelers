@@ -5,8 +5,8 @@ class BlogModel {
   String author;
   String image;
   DateTime createdAt;
-  String category;
-  String tags;
+  String blogType;
+  List<dynamic> tags;
   BlogModel({
     required this.id,
     required this.title,
@@ -14,7 +14,7 @@ class BlogModel {
     required this.author,
     required this.image,
     required this.createdAt,
-    required this.category,
+    required this.blogType,
     required this.tags,
   });
 
@@ -27,7 +27,7 @@ class BlogModel {
       'author': author,
       'image': image,
       'createdAt': createdAt.toIso8601String(),
-      'category': category,
+      'blogType': blogType,
       'tags': tags,
     };
   }
@@ -41,7 +41,7 @@ class BlogModel {
       author: map['author'] ?? '',
       image: map['image'] ?? '',
       createdAt: DateTime.parse(map['createdAt'] ?? DateTime.now().toIso8601String()),
-      category: map['category'] ?? '',
+      blogType: map['blogType'] ?? '',
       tags: map['tags']?? '',
     );
   }

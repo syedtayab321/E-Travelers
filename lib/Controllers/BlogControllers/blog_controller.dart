@@ -21,6 +21,7 @@ class BlogController extends GetxController {
         return BlogModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
       }).toList();
     } catch (e) {
+      print(e.toString());
       Get.snackbar("Error", "Failed to fetch blogs: $e");
     }
   }

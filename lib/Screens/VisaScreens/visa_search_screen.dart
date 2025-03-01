@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:country_picker/country_picker.dart';
 import '../../Controllers/VisaControllers/visa_controllers.dart';
 import '../../CustomWidgets/custom_text_widget.dart';
@@ -47,11 +46,7 @@ class VisaSearchScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            _buildCountrySelector("Nationality", controller.updateNationality),
-            const SizedBox(height: 16),
             _buildCountrySelector("Destination Country", controller.updateDestinationCountry),
-            const SizedBox(height: 16),
-            _buildDateSelector(),
             const SizedBox(height: 16),
             _buildVisaTypeSelector(),
             const SizedBox(height: 24),
@@ -66,7 +61,7 @@ class VisaSearchScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomTextWidget(text: label, fontWeight: FontWeight.bold,color: AppColors.primary,),
+        CustomTextWidget(text: label, fontWeight: FontWeight.bold, color: AppColors.primary),
         const SizedBox(height: 5),
         GestureDetector(
           onTap: () {
@@ -84,9 +79,7 @@ class VisaSearchScreen extends StatelessWidget {
                 const Icon(Icons.flag, color: AppColors.primary),
                 const SizedBox(width: 10),
                 Obx(() => CustomTextWidget(
-                  text: label == "Nationality"
-                      ? controller.visaSearchModel.value.nationality
-                      : controller.visaSearchModel.value.destinationCountry,
+                  text: controller.visaDetailsModel.value.destinationCountry ?? "Select Country",
                   fontSize: 16,
                 )),
               ],
@@ -94,41 +87,6 @@ class VisaSearchScreen extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildDateSelector() {
-    return GestureDetector(
-      onTap: () async {
-        DateTime? picked = await showDatePicker(
-          context: Get.context!,
-          initialDate: controller.visaSearchModel.value.travelDate,
-          firstDate: DateTime.now(),
-          lastDate: DateTime(2030),
-        );
-        if (picked != null) controller.updateTravelDate(picked);
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const CustomTextWidget(text: "Travel Date", fontWeight: FontWeight.bold),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            decoration: _boxShadowDecoration(),
-            child: Row(
-              children: [
-                const Icon(Icons.calendar_today, color: AppColors.primary, size: 20),
-                const SizedBox(width: 8),
-                CustomTextWidget(
-                  text: DateFormat('MMM dd, yyyy').format(controller.visaSearchModel.value.travelDate),
-                  fontSize: 16,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -141,7 +99,7 @@ class VisaSearchScreen extends StatelessWidget {
         Container(
           decoration: _boxShadowDecoration(),
           child: DropdownButtonFormField(
-            value: controller.visaSearchModel.value.visaType,
+            value: controller.visaDetailsModel.value.type,
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.white,
@@ -159,7 +117,7 @@ class VisaSearchScreen extends StatelessWidget {
 
   Widget _buildSearchButton() {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () => controller.fetchVisaDetails(),
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),

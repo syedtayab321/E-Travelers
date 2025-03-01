@@ -74,24 +74,24 @@ class HomeBannerSection extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 15),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 12),
-                        elevation: 3,
-                      ),
-                      child: const CustomTextWidget(
-                        text: "BOOK NOW",
-                        color:AppColors.primary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    // ElevatedButton(
+                    //   onPressed: () {},
+                    //   style: ElevatedButton.styleFrom(
+                    //     backgroundColor: Colors.white,
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(10),
+                    //     ),
+                    //     padding: const EdgeInsets.symmetric(
+                    //         horizontal: 20, vertical: 12),
+                    //     elevation: 3,
+                    //   ),
+                    //   child: const CustomTextWidget(
+                    //     text: "BOOK NOW",
+                    //     color:AppColors.primary,
+                    //     fontSize: 16,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

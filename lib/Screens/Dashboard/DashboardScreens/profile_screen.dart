@@ -1,6 +1,4 @@
 import 'package:e_traverlers/CustomWidgets/custom_text_widget.dart';
-import 'package:e_traverlers/Screens/ProfileScreens/account_settings_screen.dart';
-import 'package:e_traverlers/Screens/ProfileScreens/help_support_screen.dart';
 import 'package:e_traverlers/Screens/ProfileScreens/privacy_policy.dart';
 import 'package:e_traverlers/Utils/logout_dialog_box.dart';
 import 'package:flutter/material.dart';
@@ -21,13 +19,13 @@ class ProfileScreen extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
                 colors: [AppColors.primary, AppColors.primaryDark],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
               ),
@@ -35,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
                 BoxShadow(color: Colors.black26, blurRadius: 10, offset: Offset(0, 5)),
               ],
             ),
-            child: Column(
+            child: const Column(
               children: [
                 CircleAvatar(
                   radius: 55,
@@ -45,14 +43,14 @@ class ProfileScreen extends StatelessWidget {
                     backgroundImage: AssetImage("assets/images/logo.png"),
                   ),
                 ),
-                const SizedBox(height: 10),
-                const CustomTextWidget(
+                SizedBox(height: 10),
+                CustomTextWidget(
                   text: "John Doe",
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
-                const CustomTextWidget(
+                CustomTextWidget(
                   text: "john.doe@example.com",
                   fontSize: 16,
                   color: Colors.white70,
@@ -67,25 +65,11 @@ class ProfileScreen extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               children: [
-                _buildProfileOption(
-                  onPressed: () => Get.to(AccountSettingsScreen()),
-                  icon: FontAwesomeIcons.user,
-                  title: "Account Settings",
-                ),
+
                 _buildProfileOption(
                   onPressed: () => Get.to(const PrivacyPolicyScreen()),
                   icon: FontAwesomeIcons.lock,
                   title: "Privacy Policy",
-                ),
-                _buildProfileOption(
-                  onPressed: () => Get.to(const HelpSupportScreen()),
-                  icon: FontAwesomeIcons.circleQuestion,
-                  title: "Help & Support",
-                ),
-                _buildProfileOption(
-                  onPressed: () => Get.to(AccountSettingsScreen()),
-                  icon: FontAwesomeIcons.gear,
-                  title: "Settings",
                 ),
                 _buildProfileOption(
                   onPressed: () => showLogoutDialog(context),

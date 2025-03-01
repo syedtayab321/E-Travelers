@@ -11,28 +11,38 @@ class ContactSupportScreen extends StatelessWidget {
   void _showContactBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true, // Allows the sheet to take up more space
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
       ),
       backgroundColor: Colors.white,
       builder: (context) {
-        return Padding(
+        return Container(
           padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Header
               const CustomTextWidget(
                 text: "Contact Support",
-                fontSize: 20,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: AppColors.primary,
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
+              const CustomTextWidget(
+                text: "We're here to help! Choose an option below to get in touch.",
+                fontSize: 14,
+                color: Colors.grey,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
 
-              // WhatsApp Contact Button
-              _buildContactButton(
+              // WhatsApp Contact Card
+              _buildContactCard(
                 icon: FontAwesomeIcons.whatsapp,
-                title: "Contact via WhatsApp",
+                title: "WhatsApp Support",
+                subtitle: "Chat with us on WhatsApp",
                 color: Colors.green,
                 onPressed: () {
                   _launchWhatsApp("+1234567890");
@@ -40,10 +50,11 @@ class ContactSupportScreen extends StatelessWidget {
               ),
               const SizedBox(height: 15),
 
-              // Support Email Button
-              _buildContactButton(
+              // Email Support Card
+              _buildContactCard(
                 icon: FontAwesomeIcons.envelope,
                 title: "Email Support",
+                subtitle: "Send us an email",
                 color: Colors.blue,
                 onPressed: () {
                   _launchEmail("support@example.com");
@@ -51,16 +62,28 @@ class ContactSupportScreen extends StatelessWidget {
               ),
               const SizedBox(height: 15),
 
-              // Direct Call Button
-              _buildContactButton(
+              // Phone Call Card
+              _buildContactCard(
                 icon: FontAwesomeIcons.phone,
                 title: "Call Support",
+                subtitle: "Call us directly",
                 color: Colors.orange,
                 onPressed: () {
                   _launchPhoneCall("+1234567890");
                 },
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 20),
+
+              // Close Button
+              TextButton(
+                onPressed: () => Get.back(),
+                child: const CustomTextWidget(
+                  text: "Close",
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                ),
+              ),
             ],
           ),
         );
@@ -68,26 +91,65 @@ class ContactSupportScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContactButton({
+  // Reusable Contact Card Widget
+  Widget _buildContactCard({
     required IconData icon,
     required String title,
+    required String subtitle,
     required Color color,
     required VoidCallback onPressed,
   }) {
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      icon: FaIcon(icon, color: Colors.white),
-      label: CustomTextWidget(
-        text: title,
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-        color: Colors.white,
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
       ),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        padding: const EdgeInsets.symmetric(vertical: 15),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(15),
+        onTap: onPressed,
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: FaIcon(icon, color: color, size: 24),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomTextWidget(
+                      text: title,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                    ),
+                    const SizedBox(height: 4),
+                    CustomTextWidget(
+                      text: subtitle,
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
+            ],
+          ),
         ),
       ),
     );
@@ -142,6 +204,8 @@ class ContactSupportScreen extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
+            elevation: 5,
+            shadowColor: AppColors.primary.withOpacity(0.3),
           ),
           child: const CustomTextWidget(
             text: "Contact Support",
