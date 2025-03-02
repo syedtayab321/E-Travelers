@@ -1,3 +1,4 @@
+import 'package:e_traverlers/CustomDialogBoxes/hotel_booking_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -205,13 +206,7 @@ class HotelDetailsScreen extends StatelessWidget {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.snackbar(
-                          "Booking",
-                          "Your booking request has been sent!",
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: AppColors.primaryDark,
-                          colorText: Colors.white,
-                        );
+                        Get.dialog(HotelBookingDialog());
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,

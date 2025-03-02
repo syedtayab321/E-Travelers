@@ -1,3 +1,4 @@
+import 'package:e_traverlers/Screens/TourScreens/tour_booking_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../CustomWidgets/custom_text_widget.dart';
@@ -221,13 +222,7 @@ class TourDetailScreen extends StatelessWidget {
                   shadowColor: AppColors.primary.withOpacity(0.3),
                 ),
                 onPressed: () {
-                  Get.snackbar(
-                    "Booking",
-                    "Your booking request has been sent!",
-                    snackPosition: SnackPosition.BOTTOM,
-                    backgroundColor: AppColors.primaryDark,
-                    colorText: AppColors.textPrimary,
-                  );
+                  Get.to(TourBookingScreen());
                 },
                 child: const CustomTextWidget(
                   text: "Book Now",

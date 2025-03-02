@@ -1,4 +1,5 @@
 import 'package:e_traverlers/CustomWidgets/custom_text_widget.dart';
+import 'package:e_traverlers/Screens/VisaScreens/visa_booking_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Modals/visa_modal.dart';
@@ -203,7 +204,7 @@ class VisaDetailsScreen extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: ElevatedButton(
         onPressed: () {
-          Get.snackbar("Apply Now", "Visa application process started!");
+          Get.to(VisaBookingPage());
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.accent,
